@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title | ASME Amritapuri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2B50EC; /* Soft Blue */
+            --secondary: #FFD700; /* Muted Yellow */
+            --pale-yellow: #FFF9C4; /* Pale Yellow for hover */
+            --text: #333333;
+            --background: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--background);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+            padding: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        /* Mechanical Background Elements */
+        .mechanical-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
+            overflow: hidden;
+        }
+
+        /* Paper Plane */
+        .paper-plane {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M90 10L40 60L60 70L90 10Z" fill="%232B50EC"/><path d="M40 60L10 90L30 70L40 60Z" fill="%23FFD700"/></svg>');
+            animation: fly 20s linear infinite;
+        }
+
+        /* Robot */
+        .robot {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="30" y="20" width="40" height="50" fill="%232B50EC"/><circle cx="40" cy="35" r="5" fill="%23FFD700"/><circle cx="60" cy="35" r="5" fill="%23FFD700"/><rect x="35" y="60" width="30" height="10" fill="%23FFD700"/><rect x="20" y="30" width="10" height="20" fill="%232B50EC"/><rect x="70" y="30" width="10" height="20" fill="%232B50EC"/></svg>');
+            animation: walk 30s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes fly {
+            0% { transform: translate(-100px, 50px) rotate(0deg); }
+            100% { transform: translate(calc(100vw + 100px), 100px) rotate(360deg); }
+        }
+
+        @keyframes walk {
+            0% { transform: translate(-100px, 70vh) scaleX(1); }
+            49% { transform: translate(calc(100vw + 100px), 70vh) scaleX(1); }
+            50% { transform: translate(calc(100vw + 100px), 70vh) scaleX(-1); }
+            99% { transform: translate(-100px, 70vh) scaleX(-1); }
+            100% { transform: translate(-100px, 70vh) scaleX(1); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666666;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* CTA Buttons - More Modular */
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .cta-btn {
+            padding: 0.8rem 1.5rem; /* Reduced padding */
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .primary-cta {
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .primary-cta:hover {
+            background: var(--pale-yellow);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .secondary-cta {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .secondary-cta:hover {
+            background: var(--pale-yellow);
+            border-color: var(--primary);
+        }
+
+        /* Event Banner */
+        .event-banner {
+            background: #F8F9FA;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-2px);
+            width: 2px;
+            background: linear-gradient(to bottom, #9ca3af, #6b7280);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-icon i {
+            font-size: 1.2rem;
+        }
+
+        .timeline-content {
+            margin-left: 2rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 2rem);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 0;
+            margin-right: 2rem;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: auto;
+            right: 0;
+            border-left: none;
+            border-right: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: calc(50% + 2rem);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: auto;
+            right: 100%;
+            border-left: none;
+            border-right: 10px solid transparent;
+        }
+
+        .timeline-item:hover .timeline-icon {
+            transform: translateX(-50%) translateY(-50%) scale(1.2);
+            box-shadow: 0 0 10px;
+        }
+
+        .timeline-item:hover .timeline-content {
+            transform: translateX(5px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .timeline-item:nth-child(even):hover .timeline-content {
+            transform: translateX(-5px);
+        }
+
+        .event-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .event-date {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .event-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        /* --- Event Status Styles --- */
+        .event-status {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .status-upcoming {
+            background-color: #f59e0b;
+            color: #ffffff;
+        }
+
+        .status-ongoing {
+            background-color: #10b981;
+            color: #ffffff;
+        }
+
+        .status-expired {
+            background-color: #d1d5db;
+            color: #6b7280;
+        }
+
+        /* --- Timeline Item Styles based on Status --- */
+        .timeline-item.upcoming .timeline-icon {
+            background-color: #f59e0b;
+            box-shadow: 0 0 5px #f59e0b;
+        }
+        .timeline-item.upcoming .timeline-content {
+            background-color: #fff;
+            border: 1px solid #f59e0b;
+        }
+        .timeline-item.upcoming .timeline-content::before {
+            border-left-color: #fff;
+        }
+
+        .timeline-item.ongoing .timeline-icon {
+            background-color: #10b981;
+            box-shadow: 0 0 5px #10b981;
+        }
+
+        .timeline-item.ongoing .timeline-content {
+            background-color: #fff;
+            border: 1px solid #10b981;
+        }
+
+        .timeline-item.ongoing .timeline-content::before {
+            border-left-color: #fff;
+        }
+
+        .timeline-item.expired .timeline-icon {
+            background-color: #d1d5db;
+            box-shadow: 0 0 5px #d1d5db;
+        }
+
+        .timeline-item.expired .timeline-content {
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+        }
+
+        .timeline-item.expired .timeline-content::before {
+            border-left-color: #f9fafb;
+        }
+
+        .timeline-item:nth-child(even).expired .timeline-content::before {
+            border-left-color: transparent;
+            border-right-color: #f9fafb;
+        }
+
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 1rem;
+            }
+
+            .timeline-item .timeline-icon{
+                left: 0.5rem;
+            }
+
+            .timeline-content {
+                margin-left: 3.5rem;
+                width: calc(100% - 4.5rem);
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 3.5rem;
+                margin-right: 0;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: 0;
+                right: auto;
+                border-left: 10px solid transparent;
+                border-right: none;
+            }
+             .timeline-item:nth-child(odd) .timeline-content {
+                margin-left: 3.5rem;
+                margin-right: 0;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::before {
+                left: 0;
+                right: auto;
+                border-left: 10px solid transparent;
+                border-right: none;
+            }
+        }
+
+        .header {
+            background-color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #2B50EC;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #333333;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+            padding: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            color: #2B50EC;
+        }
+
+        .nav-links a.active {
+            color: #2B50EC;
+        }
+
+        .footer {
+            background-color: #f7fafc;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .guest-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .guest-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .guest-name {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="images/logo.png" alt="ASME Logo" class="logo-img">
+            <div class="logo-text">ASME AVV Amritapuri</div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="clubs.html">Clubs</a>
+            <a href="projects.html">Projects</a>
+            <a href="cores.html">Cores</a>
+            <a href="wie.html">WIE</a>
+            <a href="events.html" class="active">Events</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <main class="pt-20 pb-10">
+        <div class="container">
+            <h1 class="text-3xl font-semibold text-blue-600 text-center mb-8">Events Timeline</h1>
+            <div class="timeline">
+                <div class="timeline-item upcoming" data-aos="fade-right" data-aos-duration="600">
+                    <div class="timeline-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h2 class="event-title">Invited Talk on Cyclonic Separation Technology</h2>
+                        <span class="event-date">May 21, 2025</span>
+                        <p class="event-description">
+                            This talk will explore the principles and applications of cyclonic separation technology, a vital method in various industries for 
+                            separating particles from gases or liquids using centrifugal force. The speaker will delve into its engineering design, efficiency 
+                            improvements, and real-world use cases in dust collection, air pollution control, and material handling systems.
+                        </p>
+                        <span class="event-status status-upcoming">Upcoming</span>
+                        <div class="guest-section">
+                            <h3 class="guest-title">Guest Speaker</h3>
+                            <p class="guest-name">Dr. Srinivas Kolla, ASME Sections Ambassador, Former ASME Mid-Continent Chairperson</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="timeline-item ongoing" data-aos="fade-left" data-aos-duration="600">
+                    <div class="timeline-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="timeline-content" style="margin-top: 2rem;">
+                        <h2 class="event-title">Awareness Campaign on Saukhyam Sustainable Pads</h2>
+                        <span class="event-date">July 14, 2025</span>
+                        <p class="event-description">
+                            Join the WIE team for an informative session on Saukhyam Sustainable Pads, a green initiative that promotes eco-friendly and 
+                            reusable sanitary products. This campaign aims to raise awareness about the environmental impact of traditional sanitary pads and the 
+                            benefits of Saukhyam's sustainable alternatives. Learn about the importance of reducing plastic waste, supporting women's health, and 
+                            contributing to a cleaner, greener future.
+                        </p>
+                        <span class="event-status status-upcoming">Upcoming</span>
+                    </div>
+                </div>
+                <div class="timeline-item expired" data-aos="fade-right" data-aos-duration="600">
+                    <div class="timeline-icon">
+                         <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h2 class="event-title">DREAM BIG : STEAM outreach program</h2>
+                        <span class="event-date">April 24, 2025 </span>
+                        <p class="event-description">
+                            As the first initiative of our WIE community group, we conducted an outreach event
+aimed at empowering young girls and fostering goal-oriented thinking. The event
+was held at Karuyatheeram Balabhavan, an orphanage in the Kollam district of
+Kerala, and focused on engaging with girls aged 12 to 15. This program marked the
+beginning of our mission to support and inspire women and girls to achieve their
+dreams.
+
+                        </p>
+                        <span class="event-status status-expired">Expired</span>
+                    </div>
+                </div>
+                <div class="timeline-item expired" data-aos="fade-right" data-aos-duration="600">
+                    <div class="timeline-icon">
+                         <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h2 class="event-title">The Summer School 2025</h2>
+                        <span class="event-date">April 21, 2025 - April 27, 2025</span>
+                        <p class="event-description">
+                            ACM & ASME student chapter Amritapuri, organized 6 days Summer School event provided school students with a hands-on introduction to the world of technology. 
+                            Along with coding, students learned the basics of robotics, 3D printing, and 3D modeling. Through interactive 
+                            workshops and practical sessions, we inspired creativity and problem-solving skills, equipping students with essential 
+                            knowledge in cutting-edge fields like automation, design, and digital fabrication.
+                        </p>
+                        <span class="event-status status-expired">Expired</span>
+                    </div>
+                </div>
+                <div class="timeline-item expired" data-aos="fade-left" data-aos-duration="600">
+                    <div class="timeline-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h2 class="event-title">ASME WIE Inauguration</h2>
+                        <span class="event-date">March 14, 2025</span>
+                        <p class="event-description">
+                           The Women in Engineering (WIE) Affinity Group at ASME AVV Amritapuri was
+launched with the aim of empowering women in STEM, enhancing their involvement and
+retention in technical sectors, tackling gender inequalities, and motivating upcoming
+generations. Acknowledging the lack of a WIE branch under any ASME student section
+in India, we took the initiative to fill this void, becoming the first ASME student section
+in the nation to create a WIE affinity group.
+The inauguration event featured Dr. Seena V, a Professor at the Indian Institute of Space
+Science and Technology (IIST), Trivandrum, whose insights and expertise offered
+valuable support to aspiring women engineers. Her speech highlighted the significance of
+diversity in STEM fields and the importance of initiatives like WIE in nurturing a more
+inclusive technical community.
+                        </p>
+                        <span class="event-status status-expired">Expired</span>
+                    </div>
+                </div>
+            </div>
+        <div class="timeline">
+                
+                
+                <div class="timeline-item expired" data-aos="fade-left" data-aos-duration="600">
+                    <div class="timeline-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="timeline-content" style="margin-top: 2rem;">
+                        <h2 class="event-title">ASME EFX AVV Amritapuri</h2>
+                        <span class="event-date">February 8, 2025</span>
+                        <p class="event-description">
+                            The ASME EFx AVV Amritapuri, a regional tech-fest took place at Amrita Vishwa
+Vidyapeetham on February 8, 2025. Under the guidance of the Department of
+Mechanical Engineering, the ASME (American Society of Mechanical Engineers) AVV
+(Amrita Vishwa Vidyapeetham) Student Section organized the university's first-ever
+EFx (Engineering Festivals, ‘x’ stands for independent) event. The Event attracted 273
+participants across south india and has been a very successful event. The event hosted Elevator pitch, Drone racing competition, Drone fabrication workshop, various technical talks and exhibitions.
+                        </p>
+                        <span class="event-status status-expired">Expired</span>
+                    </div>
+                </div>
+                <div class="timeline-item expired" data-aos="fade-right" data-aos-duration="600">
+                    <div class="timeline-icon">
+                         <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h2 class="event-title">TEA TALKS Season 1: Advancements in Missiles and Launch Vehicle Technology in India</h2>
+                        <span class="event-date">May 27, 2024 </span>
+                        <p class="event-description">
+                            Join Us for an Exciting Talk on Missiles and Launch Vehicles! 🚀
+
+Are you fascinated by the science of missiles and launch vehicles? Come and delve into the intriguing world of aerospace technology with us!
+
+🗓️ Date & Time: 27.05.2024 9:30am
+📍 Venue: Amritheshwari Hall
+
+But that’s not all! Put your knowledge to the test with our Quiz and stand a chance to win from a prize pool worth ₹2500!
+
+
+                        </p>
+                        <span class="event-status status-expired">Expired</span>
+                    </div>
+                </div>
+                
+           
+        </div>
+    </main>
+        
+    
+
+    <div class="mechanical-bg">
+        <div class="paper-plane" style="top:20%; left:5%; animation-delay: 0s;"></div>
+        <div class="paper-plane" style="top:40%; left:80%; animation-delay: 3s; animation-duration: 25s;"></div>
+        <div class="robot" style="top:70%; left:10%; animation-delay: 2s;"></div>
+        <div class="robot" style="top:75%; left:60%; animation-delay: 5s; animation-duration: 40s;"></div>
+    </div>
+
+    <script>
+        // COPY SAME JS FROM INDEX.HTML
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.mechanical-bg > div');
+            const xPos = e.clientX / window.innerWidth;
+            const yPos = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = 0.02 + (index * 0.01);
+                const xOffset = (xPos - 0.5) * 30 * speed;
+                const yOffset = (yPos - 0.5) * 30 * speed;
+                
+                el.style.transform = `
+                    ${el.style.transform.match(/translate\([^)]*\)/) ? el.style.transform.match(/translate\([^)]*\)/)[0] : ''}
+                    translate(${xOffset}px, ${yOffset}px)
+                    ${el.style.transform.match(/scaleX\([^)]*\)/) ? el.style.transform.match(/scaleX\([^)]*\)/)[0] : ''}
+                    ${el.style.transform.match(/rotate\([^)]*\)/) ? el.style.transform.match(/rotate\([^)]*\)/)[0] : ''}
+                `;
+            });
+        });
+        
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>
