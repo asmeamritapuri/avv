@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Title | ASME Amritapuri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" xintegrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-             --primary: #2B50EC;
-            --secondary: #FFD700;
-            --pale-yellow: #FFF9C4;
+            --primary: #2B50EC;  /* Soft Blue */
+            --secondary: #FFD700;    /* Muted Yellow */
+            --pale-yellow: #FFF9C4;  /* Pale Yellow for hover */
             --text: #333333;
             --background: #FFFFFF;
             --card-background: #F9FAFB;  /* Light background for cards */
@@ -84,16 +90,37 @@
             color: var(--primary);
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 4rem 2rem;
-            margin-top: 4rem;
-            position: relative;
+        /* Hamburger Icon */
+        .hamburger {
+            display: none; /* Hidden by default on larger screens */
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 1001; /* Ensure it's above other content */
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Hamburger animation */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
         }
 
         /* Mechanical Background Elements */
@@ -139,76 +166,6 @@
             99% { transform: translate(-100px, 70vh) scaleX(-1); }
             100% { transform: translate(-100px, 70vh) scaleX(1); }
         }
-
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 1;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #666666;
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-        }
-
-        /* CTA Buttons - More Modular */
-        .cta-container {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .cta-btn {
-            padding: 0.8rem 1.5rem; /* Reduced padding */
-            border-radius: 25px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .primary-cta {
-            background: var(--primary);
-            color: white;
-            border: 2px solid var(--primary);
-        }
-
-        .primary-cta:hover {
-            background: var(--pale-yellow);
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .secondary-cta {
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            background: transparent;
-        }
-
-        .secondary-cta:hover {
-            background: var(--pale-yellow);
-            border-color: var(--primary);
-        }
-
-        /* Event Banner */
-        .event-banner {
-            background: #F8F9FA;
-            padding: 2rem;
-            text-align: center;
-            margin: 2rem 0;
-            border-left: 4px solid var(--primary);
-        }
-
 
         /* --- Layout --- */
         .container {
@@ -300,63 +257,88 @@
             color: var(--text);
         }
         .status-ongoing {
-             background-color: #4CAF50;
+            background-color: #4CAF50;
         }
-        .status-finished{
+        .status-finished {
             background-color: #1E88E5;
         }
-        .status-upcoming{
+        .status-upcoming {
             background-color: #FFC107;
-            color: var(--text)
+            color: var(--text);
         }
 
         /* --- Responsive Adjustments --- */
         @media (max-width: 768px) {
-            .project-grid {
-                grid-template-columns: 1fr;
+            .navbar {
+                flex-direction: row; /* Keep logo and hamburger on one row */
+                flex-wrap: nowrap;
+                justify-content: space-between; /* Space between logo and hamburger */
+            }
+
+            .logo-container {
+                margin-right: auto; /* Push logo to the left */
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* Adjust based on navbar height */
+                left: 0;
+                width: 100%;
+                background: var(--background);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                max-height: 0; /* Hidden by default */
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+
+            .nav-links.open {
+                max-height: 600px; /* Increased height to show all links */
+                padding-bottom: 1rem; /* Add some padding at the bottom when open */
+            }
+
+            .nav-links a {
+                padding: 0.75rem 0;
+                text-align: center;
+                border-bottom: 1px solid #eee; /* Add subtle separation */
+                width: 100%; /* Make links take full width of dropdown */
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none; /* No border for the last link */
+            }
+
+            .hamburger {
+                display: flex; /* Show hamburger icon on small screens */
+            }
+
+            .container {
+                padding: 1rem; /* Adjusted padding for smaller screens */
             }
 
             .section-title {
                 font-size: 2rem;
             }
-        }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .tagline {
-                font-size: 1rem;
-            }
-
-            .cta-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .mechanical-bg {
-                opacity: 0.05;
-            }
-
-            .paper-plane, .robot {
-                transform: scale(0.7);
+            .project-grid {
+                grid-template-columns: 1fr; /* Stack project cards vertically on small screens */
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation (Same on all pages) -->
     <nav class="navbar">
         <div class="logo-container">
             <img src="images/logo.png" alt="ASME Logo" class="logo-img">
             <div class="logo-text">ASME Amritapuri</div>
         </div>
-        <div class="nav-links">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links" id="navLinks">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="clubs.html">Clubs</a>
@@ -368,8 +350,6 @@
         </div>
     </nav>
 
-    <!-- Unique Page Content Goes Here -->
-    
     <main class="main">
         <section class="container">
             <h2 class="section-title">Our Projects</h2>
@@ -415,9 +395,7 @@
                             Our team designed and built a remote-controlled Blended Wing Body aircraft, featuring a sleek tail-less delta wing configuration 
                             that enhances maneuverability and significantly reduces aerodynamic drag. The aircraft’s unique fuselage-wing blend improves lift and 
                             efficiency. We built a lightweight 900g model powered by a 1500kv brushless motor and an 8x4.5-inch propeller, delivering a maximum thrust
-                             of 850 grams with excellent flight stability.
-
-
+                            of 850 grams with excellent flight stability.
                         </p>
                         <div class="project-labels">
                             <span class="label club-label">Air Squad</span>
@@ -448,8 +426,8 @@
                         <p class="project-description">
                             We are designing and building an Efficient Human-Powered Vehicle Challenge (e-HPVC) vehicle focused on maximizing aerodynamic 
                             efficiency and rider comfort. The lightweight frame incorporates advanced composites, while the drivetrain is optimized for minimal energy loss.
-                             Featuring streamlined fairings and ergonomic seating, the vehicle aims to achieve top speeds with human power alone, pushing the limits 
-                             of sustainable transportation and competitive engineering design.
+                            Featuring streamlined fairings and ergonomic seating, the vehicle aims to achieve top speeds with human power alone, pushing the limits 
+                            of sustainable transportation and competitive engineering design.
                         </p>
                         <div class="project-labels">
                             <span class="label club-label">Asphalt</span>
@@ -457,7 +435,7 @@
                         </div>
                     </div>
                 </div>
-                 <div class="project-card">
+                <div class="project-card">
                     <img src="images/maniulator.png" alt="Project 4">
                     <div class="project-content">
                         <h3 class="project-title">Robotic Manipulator for Waste Segregation</h3>
@@ -483,15 +461,6 @@
         </div>
     </footer>
 
-    <script>
-    </script>
-</body>
-</html>
-
-        <!-- Different for each page -->
-    </main>
-
-    <!-- Mechanical Elements (Same on all pages) -->
     <div class="mechanical-bg">
         <div class="paper-plane" style="top:20%; left:5%; animation-delay: 0s;"></div>
         <div class="paper-plane" style="top:40%; left:80%; animation-delay: 3s; animation-duration: 25s;"></div>
@@ -500,23 +469,51 @@
     </div>
 
     <script>
-        // COPY SAME JS FROM INDEX.HTML
-        document.addEventListener('mousemove', (e) => {
-            const elements = document.querySelectorAll('.mechanical-bg > div');
-            const xPos = e.clientX / window.innerWidth;
-            const yPos = e.clientY / window.innerHeight;
-            
-            elements.forEach((el, index) => {
-                const speed = 0.02 + (index * 0.01);
-                const xOffset = (xPos - 0.5) * 30 * speed;
-                const yOffset = (yPos - 0.5) * 30 * speed;
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('open');
+            });
+
+            // Close the navbar when a link is clicked (optional, but good for UX)
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('open');
+                });
+            });
+
+            // Mechanical background elements interaction
+            document.addEventListener('mousemove', (e) => {
+                const elements = document.querySelectorAll('.mechanical-bg > div');
+                const xPos = e.clientX / window.innerWidth;
+                const yPos = e.clientY / window.innerHeight;
                 
-                el.style.transform = `
-                    ${el.style.transform.match(/translate\([^)]*\)/) ? el.style.transform.match(/translate\([^)]*\)/)[0] : ''}
-                    translate(${xOffset}px, ${yOffset}px)
-                    ${el.style.transform.match(/scaleX\([^)]*\)/) ? el.style.transform.match(/scaleX\([^)]*\)/)[0] : ''}
-                    ${el.style.transform.match(/rotate\([^)]*\)/) ? el.style.transform.match(/rotate\([^)]*\)/)[0] : ''}
-                `;
+                elements.forEach((el, index) => {
+                    const speed = 0.02 + (index * 0.01);
+                    const xOffset = (xPos - 0.5) * 30 * speed;
+                    const yOffset = (yPos - 0.5) * 30 * speed;
+                    
+                    // Ensure existing transforms are preserved, especially for animations
+                    let currentTransform = el.style.transform;
+                    let newTransform = '';
+
+                    // Extract existing translate, scaleX, and rotate parts
+                    const translateMatch = currentTransform.match(/translate\([^)]*\)/);
+                    const scaleXMatch = currentTransform.match(/scaleX\([^)]*\)/);
+                    const rotateMatch = currentTransform.match(/rotate\([^)]*\)/);
+
+                    // Reconstruct transform string, adding mouse interaction offset
+                    newTransform += translateMatch ? translateMatch[0] : '';
+                    newTransform += ` translate(${xOffset}px, ${yOffset}px)`;
+                    newTransform += scaleXMatch ? scaleXMatch[0] : '';
+                    newTransform += rotateMatch ? rotateMatch[0] : '';
+
+                    el.style.transform = newTransform;
+                });
             });
         });
     </script>
